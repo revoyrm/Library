@@ -8,11 +8,11 @@ AppDataSource.initialize()
     book.Title = "Timber";
     book.author = "Avery Fay";
     await AppDataSource.manager.save(book);
-    console.log("Saved a new user with id: " + book.id);
+    console.log("Saved a new book with id: " + book.id);
 
-    console.log("Loading users from the database...");
+    console.log("Loading books from the database...");
     const books = await AppDataSource.manager.find(Book);
-    console.log("Loaded users: ", books);
+    console.log("Loaded books: ", books);
 
     console.log(
       "Here you can setup and run express / fastify / any other framework."

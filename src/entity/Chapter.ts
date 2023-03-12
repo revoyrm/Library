@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  JoinColumn,
+  OneToOne,
+} from "typeorm";
+import { Label } from "./Label";
 
 @Entity()
 export class Chapter extends BaseEntity {
@@ -11,6 +19,10 @@ export class Chapter extends BaseEntity {
   @Column()
   description: string;
 
-  @Column("varchar", { nullable: true, array: true })
-  labels?: string[];
+  @Column()
+  number: number;
+
+  @OneToOne(() => Label)
+  @JoinColumn()
+  label: Label;
 }

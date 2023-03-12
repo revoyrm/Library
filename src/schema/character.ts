@@ -2,11 +2,11 @@ export const characterType = `#graphql
   type Character {
     name: String
     description: String
-    labels: [String]
+    label: Label
   }
   
   type Query {
-    getCharactersForBookId(bookId: String): [Character]
+    getCharactersByBookId(bookId: String): [Character]
   }
 
   type Query {
@@ -14,6 +14,6 @@ export const characterType = `#graphql
   }
 
   type Mutation {
-    addCharacter(name: String, description: String, labels: [String] ): Boolean
+    addCharacter(name: String, description: String): Boolean
   }
 `;

@@ -1,4 +1,5 @@
 import { Book } from "../entity/Book";
+import { Label } from "../entity/Label";
 
 // Provide resolver functions for your schema fields
 export const bookResolver = {
@@ -11,10 +12,15 @@ export const bookResolver = {
     addBook: async (_: any, args: any) => {
       const { summary, title, author } = args;
       try {
+        const label = Label.create({
+          label: title,
+        });
+
         const book = Book.create({
           summary,
           title,
           author,
+          label,
         });
 
         await book.save();

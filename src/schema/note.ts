@@ -2,11 +2,16 @@ export const noteType = `#graphql
   type Note {
     title: String
     note: String
-    labels: [String]
+    labels: [Label]
   }
   
+  input LabelInput {
+    id: Number,
+    label: String
+  }
+
   type Query {
-    getNotesForBookId(bookId: String): [Note]
+    getNotesByBookId(bookId: String): [Note]
   }
 
   type Query {
@@ -14,6 +19,6 @@ export const noteType = `#graphql
   }
 
   type Mutation {
-    addNote(title: String, note: String, labels: [String] ): Boolean
+    addNote(title: String, note: String, label: [LabelInput] ): Boolean
   }
 `;

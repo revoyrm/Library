@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  JoinColumn,
+  ManyToMany,
+} from "typeorm";
+import { Label } from "./Label";
 
 @Entity()
 export class Note extends BaseEntity {
@@ -11,6 +19,7 @@ export class Note extends BaseEntity {
   @Column()
   note: string;
 
-  @Column("varchar", { nullable: true, array: true })
-  labels?: string[];
+  @ManyToMany(() => Label)
+  @JoinColumn()
+  labels: Label[];
 }

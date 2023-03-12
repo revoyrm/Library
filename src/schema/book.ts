@@ -3,6 +3,7 @@ export const bookType = `#graphql
     title: String
     author: String
     summary: String
+    label: Label
   }
   
   type Query {
@@ -10,6 +11,6 @@ export const bookType = `#graphql
   }
 
   type Mutation {
-    addBook(title: String, author: String, summary: String! ): Boolean
+    addBook(title: String, author: String, summary: String ): Boolean
   }
 `;

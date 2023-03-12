@@ -1,4 +1,5 @@
 import { Chapter } from "../entity/Chapter";
+import { Label } from "../entity/Label";
 
 // Provide resolver functions for your schema fields
 export const chapterResolver = {
@@ -12,12 +13,17 @@ export const chapterResolver = {
   },
   Mutation: {
     addChapter: async (_: any, args: any) => {
-      const { name, description, labels } = args;
+      const { name, description, number } = args;
       try {
+        const label = Label.create({
+          label: name,
+        });
+
         const chapter = Chapter.create({
           name,
           description,
-          labels,
+          number,
+          label,
         });
 
         await chapter.save();

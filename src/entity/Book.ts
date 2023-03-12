@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  OneToOne,
+  JoinColumn,
+} from "typeorm";
+import { Label } from "./Label";
 
 @Entity()
 export class Book extends BaseEntity {
@@ -13,4 +21,8 @@ export class Book extends BaseEntity {
 
   @Column()
   summary: string;
+
+  @OneToOne(() => Label)
+  @JoinColumn()
+  label: Label;
 }

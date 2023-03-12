@@ -2,11 +2,11 @@ export const settingType = `#graphql
   type Setting {
     name: String
     description: String
-    labels: [String]
+    label: Label
   }
   
   type Query {
-    getSettingsForBookId(bookId: String): [Setting]
+    getSettingsByBookId(bookId: String): [Setting]
   }
 
   type Query {
@@ -14,6 +14,6 @@ export const settingType = `#graphql
   }
 
   type Mutation {
-    addSetting(name: String, description: String, labels: [String] ): Boolean
+    addSetting(name: String, description: String, label: Label ): Boolean
   }
 `;

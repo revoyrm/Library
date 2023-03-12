@@ -1,4 +1,5 @@
 import { Character } from "../entity/Character";
+import { Label } from "../entity/Label";
 
 // Provide resolver functions for your schema fields
 export const characterResolver = {
@@ -12,12 +13,16 @@ export const characterResolver = {
   },
   Mutation: {
     addCharacter: async (_: any, args: any) => {
-      const { name, description, labels } = args;
+      const { name, description } = args;
       try {
+        const label = Label.create({
+          label: name,
+        });
+
         const character = Character.create({
           name,
           description,
-          labels,
+          label,
         });
 
         await character.save();

@@ -2,11 +2,12 @@ export const chapterType = `#graphql
   type Chapter {
     name: String
     description: String
-    labels: [String]
+    number: Number
+    label: Label
   }
   
   type Query {
-    getChaptersForBookId(bookId: String): [Chapter]
+    getChaptersByBookId(bookId: String): [Chapter]
   }
 
   type Query {
@@ -14,6 +15,6 @@ export const chapterType = `#graphql
   }
 
   type Mutation {
-    addChapter(name: String, description: String, labels: [String] ): Boolean
+    addChapter(name: String, description: String, number: Number): Boolean
   }
 `;

@@ -5,6 +5,7 @@ import {
   BaseEntity,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
 import { Label } from "./Label";
 
@@ -25,4 +26,7 @@ export class Book extends BaseEntity {
   @OneToOne(() => Label)
   @JoinColumn()
   label: Label;
+
+  @OneToMany(() => Label, (label) => label.book)
+  allLabels: Label[];
 }

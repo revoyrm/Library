@@ -12,6 +12,8 @@ export const bookResolver = {
     addBook: async (_: any, args: any) => {
       const { summary, title, author } = args;
       try {
+        //todo label needs reference to book
+        //todo every other thing needs to update book allLabels
         const label = Label.create({
           label: title,
         });
@@ -21,6 +23,7 @@ export const bookResolver = {
           title,
           author,
           label,
+          allLabels: [label],
         });
 
         await book.save();

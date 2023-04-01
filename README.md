@@ -10,6 +10,7 @@ Steps to run this project:
 
 You can find the migrations in the src/migrations folder
 ## Generate Migrations
+ `npm run typeorm -- migration:generate ./src/migrations/<name>`
 
 ## Run Migrations
 `npm run typeorm -- migration:run`

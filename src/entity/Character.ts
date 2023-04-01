@@ -3,30 +3,23 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  OneToOne,
   JoinColumn,
-  OneToMany,
+  OneToOne,
 } from "typeorm";
 import { Label } from "./Label";
 
 @Entity()
-export class Book extends BaseEntity {
+export class Character extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  title: string;
+  name: string;
 
   @Column()
-  author: string;
-
-  @Column()
-  summary: string;
+  description: string;
 
   @OneToOne(() => Label)
   @JoinColumn()
   label: Label;
-
-  @OneToMany(() => Label, (label) => label.book)
-  allLabels: Label[];
 }

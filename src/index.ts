@@ -1,21 +1,23 @@
+import "reflect-metadata";
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
+import { resolvers } from "./resolvers";
+import { typeDefs } from "./schema";
 import { AppDataSource } from "./data-source";
-import { Book } from "./entity/Book";
 
-AppDataSource.initialize()
-  .then(async () => {
-    console.log("Inserting a new Book into the database...");
-    const book = new Book();
-    book.Title = "Timber";
-    book.author = "Avery Fay";
-    await AppDataSource.manager.save(book);
-    console.log("Saved a new book with id: " + book.id);
+const startServer = async () => {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+  });
 
-    console.log("Loading books from the database...");
-    const books = await AppDataSource.manager.find(Book);
-    console.log("Loaded books: ", books);
+  await AppDataSource.initialize();
 
-    console.log(
-      "Here you can setup and run express / fastify / any other framework."
-    );
-  })
-  .catch((error) => console.log(error));
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: 4000 },
+  });
+
+  console.log(`🚀  Server ready at: ${url}`);
+};
+
+startServer();

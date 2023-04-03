@@ -9,11 +9,9 @@ export const bookResolver = {
     },
   },
   Mutation: {
-    addBook: async (_: any, args: any) => {
+    createBook: async (_: any, args: any) => {
       const { summary, title, author } = args;
       try {
-        //todo label needs reference to book
-        //todo every other thing needs to update book allLabels
         const label = Label.create({
           label: title,
         });

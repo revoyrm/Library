@@ -2,7 +2,7 @@ export const settingType = `#graphql
   type Setting {
     name: String
     description: String
-    label: Label
+    label: String
   }
   
   type Query {
@@ -14,6 +14,6 @@ export const settingType = `#graphql
   }
 
   type Mutation {
-    addSetting(name: String, description: String, label: Label ): Boolean
+    addSetting(name: String, description: String, label: String ): Boolean
   }
 `;

@@ -11,6 +11,6 @@ export const bookType = `#graphql
   }
 
   type Mutation {
-    addBook(title: String, author: String, summary: String ): Boolean
+    createBook(title: String, author: String, summary: String ): Boolean
   }
 `;

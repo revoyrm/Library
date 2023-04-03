@@ -6,7 +6,7 @@ export const noteType = `#graphql
   }
   
   input LabelInput {
-    id: Number,
+    id: ID,
     label: String
   }
 

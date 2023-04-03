@@ -2,7 +2,7 @@ export const chapterType = `#graphql
   type Chapter {
     name: String
     description: String
-    number: Number
+    number: Int
     label: Label
   }
   
@@ -15,6 +15,6 @@ export const chapterType = `#graphql
   }
 
   type Mutation {
-    addChapter(name: String, description: String, number: Number): Boolean
+    addChapter(name: String, description: String, number: Int): Boolean
   }
 `;

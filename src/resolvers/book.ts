@@ -5,7 +5,15 @@ import { AppDataSource } from "../data-source";
 export const bookResolver = {
   Query: {
     getBooks: async (_: any, args: any) => {
-      return await Book.find();
+      return await Book.find({
+        relations: {
+          allLabels: true,
+          label: true,
+          characters: true,
+          chapters: true,
+          settings: true,
+        },
+      });
     },
   },
   Mutation: {
@@ -22,12 +30,14 @@ export const bookResolver = {
         book.author = author;
         book.label = label;
         book.allLabels = [label];
-        await AppDataSource.manager.save(book);
+        const createdBook = await AppDataSource.manager.save(book);
 
-        return true;
+        console.log(createdBook);
+
+        return createdBook;
       } catch (error) {
         console.error(error);
-        return false;
+        return null;
       }
     },
   },

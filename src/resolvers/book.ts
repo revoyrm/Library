@@ -1,7 +1,7 @@
 import { Book } from "../entity/Book";
 import { Label } from "../entity/Label";
+import { AppDataSource } from "../data-source";
 
-// Provide resolver functions for your schema fields
 export const bookResolver = {
   Query: {
     getBooks: async (_: any, args: any) => {
@@ -12,22 +12,21 @@ export const bookResolver = {
     createBook: async (_: any, args: any) => {
       const { summary, title, author } = args;
       try {
-        const label = Label.create({
-          label: title,
-        });
+        const label = new Label();
+        label.label = title;
+        await AppDataSource.manager.save(label);
 
-        const book = Book.create({
-          summary,
-          title,
-          author,
-          label,
-          allLabels: [label],
-        });
-
-        await book.save();
+        const book = new Book();
+        book.summary = summary;
+        book.title = title;
+        book.author = author;
+        book.label = label;
+        book.allLabels = [label];
+        await AppDataSource.manager.save(book);
 
         return true;
       } catch (error) {
+        console.error(error);
         return false;
       }
     },

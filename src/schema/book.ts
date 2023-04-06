@@ -1,4 +1,9 @@
 export const bookType = `#graphql
+  type Label {
+    label: String
+    id: ID
+  }
+
   type Book {
     id: ID
     title: String
@@ -17,5 +22,13 @@ export const bookType = `#graphql
 
   type Mutation {
     createBook(title: String, author: String, summary: String ): Book
+  }
+
+  type Mutation {
+    deleteBook(id: String): Boolean
+  }
+
+  type Mutation {
+    updateBook(id: ID, title: String, author: String, summary: String, labelId: ID): Boolean
   }
 `;

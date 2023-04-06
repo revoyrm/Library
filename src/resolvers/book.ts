@@ -40,5 +40,35 @@ export const bookResolver = {
         return null;
       }
     },
+    deleteBook: async (_: any, args: any) => {
+      const { id } = args;
+      try {
+        const book = await Book.findOneBy({ id });
+        //todo label
+        if (book) {
+          await Book.remove(book);
+        }
+
+        console.log(book);
+
+        return true;
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
+    },
+    updateBook: async (_: any, args: any) => {
+      const { id, title, author, summary, labelId } = args;
+      try {
+        Book.update({ id }, { title, author, summary });
+
+        Label.update({ id: labelId }, { label: title });
+
+        return true;
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
+    },
   },
 };

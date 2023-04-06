@@ -8,7 +8,7 @@ import {
   OneToMany,
 } from "typeorm";
 import { Label } from "./Label";
-import { Chapter } from './Chapter'
+import { Chapter } from "./Chapter";
 import { Character } from "./Character";
 import { Setting } from "./Setting";
 

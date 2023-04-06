@@ -1,4 +1,9 @@
 export const characterType = `#graphql
+  type Label {
+    label: String
+    id: ID
+  }
+
   type Character {
     name: String
     description: String

@@ -1,8 +1,13 @@
 export const settingType = `#graphql
+  type Label {
+    label: String
+    id: ID
+  }
+
   type Setting {
     name: String
     description: String
-    label: String
+    label: Label
   }
   
   type Query {

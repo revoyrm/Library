@@ -4,6 +4,28 @@ export const bookType = `#graphql
     id: ID
   }
 
+  type Character {
+    id: ID
+    name: String
+    description: String
+    label: Label
+  }
+
+  type Chapter {
+    id: ID
+    name: String
+    description: String
+    number: Int
+    label: Label
+  }
+
+  type Setting {
+    id: ID
+    name: String
+    description: String
+    label: Label
+  }
+
   type Book {
     id: ID
     title: String

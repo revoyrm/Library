@@ -8,6 +8,9 @@ import {
   OneToMany,
 } from "typeorm";
 import { Label } from "./Label";
+import { Chapter } from "./Chapter";
+import { Character } from "./Character";
+import { Setting } from "./Setting";
 
 @Entity()
 export class Book extends BaseEntity {
@@ -26,6 +29,15 @@ export class Book extends BaseEntity {
   @OneToOne(() => Label)
   @JoinColumn()
   label: Label;
+
+  @OneToMany(() => Chapter, (chapter) => chapter.book)
+  chapters: Chapter[];
+
+  @OneToMany(() => Character, (character) => character.book)
+  characters: Character[];
+
+  @OneToMany(() => Setting, (setting) => setting.book)
+  settings: Setting[];
 
   @OneToMany(() => Label, (label) => label.book)
   allLabels: Label[];

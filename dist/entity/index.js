@@ -1,2 +1,10 @@
-import { Book } from "./Book";
-export const entities = [Book];
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.entities = void 0;
+const Book_1 = require("./Book");
+const Character_1 = require("./Character");
+const Chapter_1 = require("./Chapter");
+const Setting_1 = require("./Setting");
+const Note_1 = require("./Note");
+const Label_1 = require("./Label");
+exports.entities = [Book_1.Book, Character_1.Character, Chapter_1.Chapter, Setting_1.Setting, Note_1.Note, Label_1.Label];

@@ -1,3 +1,5 @@
+import { AppDataSource } from "../data-source";
+import { Book } from "../entity/Book";
 import { Chapter } from "../entity/Chapter";
 import { Label } from "../entity/Label";
 
@@ -8,28 +10,74 @@ export const chapterResolver = {
       return await Chapter.find();
     },
     getChapterById: async (_: any, args: any) => {
-      return await Chapter.find();
+      const { id } = args;
+      return await Chapter.find({
+        where: { id },
+        relations: {
+          label: true,
+        },
+      });
     },
   },
   Mutation: {
-    addChapter: async (_: any, args: any) => {
-      const { name, description, number } = args;
+    createChapter: async (_: any, args: any) => {
+      const { bookId, name, number, description } = args;
       try {
-        const label = Label.create({
-          label: name,
+        const book = await Book.findOne({
+          where: { id: bookId },
+          relations: {
+            chapters: true,
+          },
         });
 
-        const chapter = Chapter.create({
-          name,
-          description,
-          number,
-          label,
-        });
+        if (!book) return null;
 
-        await chapter.save();
+        const label = new Label();
+        label.label = name;
+        await AppDataSource.manager.save(label);
+
+        const chapter = new Chapter();
+        chapter.description = description;
+        chapter.name = name;
+        chapter.number = number;
+        chapter.label = label;
+        chapter.book = book;
+        const createdChapter = await AppDataSource.manager.save(chapter);
+
+        console.log(createdChapter);
+
+        return createdChapter;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    },
+    deleteChapter: async (_: any, args: any) => {
+      const { id } = args;
+      try {
+        const chapter = await Chapter.findOneBy({ id });
+        if (chapter) {
+          await Chapter.remove(chapter);
+        }
+
+        console.log(chapter);
 
         return true;
       } catch (error) {
+        console.error(error);
+        return false;
+      }
+    },
+    updateChapter: async (_: any, args: any) => {
+      const { id, name, number, description, labelId } = args;
+      try {
+        Chapter.update({ id }, { name, number, description });
+
+        Label.update({ id: labelId }, { label: name });
+
+        return true;
+      } catch (error) {
+        console.error(error);
         return false;
       }
     },

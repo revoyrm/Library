@@ -1,4 +1,7 @@
-export const noteType = `#graphql
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.noteType = void 0;
+exports.noteType = `#graphql
   type Note {
     title: String
     note: String
@@ -6,7 +9,7 @@ export const noteType = `#graphql
   }
   
   input LabelInput {
-    id: ID,
+    id: Number,
     label: String
   }
 

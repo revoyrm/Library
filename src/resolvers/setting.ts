@@ -1,3 +1,5 @@
+import { AppDataSource } from "../data-source";
+import { Book } from "../entity/Book";
 import { Label } from "../entity/Label";
 import { Setting } from "../entity/Setting";
 
@@ -8,27 +10,73 @@ export const settingResolver = {
       return await Setting.find();
     },
     getSettingById: async (_: any, args: any) => {
-      return await Setting.find();
+      const { id } = args;
+      return await Setting.find({
+        where: { id },
+        relations: {
+          label: true,
+        },
+      });
     },
   },
   Mutation: {
-    addSetting: async (_: any, args: any) => {
-      const { name, description, labels } = args;
+    createSetting: async (_: any, args: any) => {
+      const { bookId, name, description } = args;
       try {
-        const label = Label.create({
-          label: name,
+        const book = await Book.findOne({
+          where: { id: bookId },
+          relations: {
+            chapters: true,
+          },
         });
 
-        const setting = Setting.create({
-          name,
-          description,
-          label,
-        });
+        if (!book) return null;
 
-        await setting.save();
+        const label = new Label();
+        label.label = name;
+        await AppDataSource.manager.save(label);
+
+        const setting = new Setting();
+        setting.description = description;
+        setting.name = name;
+        setting.label = label;
+        setting.book = book;
+        const createdSetting = await AppDataSource.manager.save(setting);
+
+        console.log(createdSetting);
+
+        return createdSetting;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    },
+    deleteSetting: async (_: any, args: any) => {
+      const { id } = args;
+      try {
+        const setting = await Setting.findOneBy({ id });
+        if (setting) {
+          await Setting.remove(setting);
+        }
+
+        console.log(setting);
 
         return true;
       } catch (error) {
+        console.error(error);
+        return false;
+      }
+    },
+    updateSetting: async (_: any, args: any) => {
+      const { id, name, description, labelId } = args;
+      try {
+        Setting.update({ id }, { name, description });
+
+        Label.update({ id: labelId }, { label: name });
+
+        return true;
+      } catch (error) {
+        console.error(error);
         return false;
       }
     },

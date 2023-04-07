@@ -1,3 +1,5 @@
+import { AppDataSource } from "../data-source";
+import { Book } from "../entity/Book";
 import { Character } from "../entity/Character";
 import { Label } from "../entity/Label";
 
@@ -8,27 +10,74 @@ export const characterResolver = {
       return await Character.find();
     },
     getCharacterById: async (_: any, args: any) => {
-      return await Character.find();
+      const { id } = args;
+      return await Character.find({
+        where: { id },
+        relations: {
+          label: true,
+        },
+      });
     },
   },
   Mutation: {
-    addCharacter: async (_: any, args: any) => {
-      const { name, description } = args;
+    createCharacter: async (_: any, args: any) => {
+      const { bookId, name, age, description } = args;
       try {
-        const label = Label.create({
-          label: name,
+        console.log({ bookId, name, age, description });
+        const book = await Book.findOne({
+          where: { id: bookId },
+          relations: {
+            chapters: true,
+          },
         });
 
-        const character = Character.create({
-          name,
-          description,
-          label,
-        });
+        if (!book) return null;
+        const label = new Label();
+        label.label = name;
+        await AppDataSource.manager.save(label);
 
-        await character.save();
+        const character = new Character();
+        character.description = description;
+        character.name = name;
+        character.age = age;
+        character.label = label;
+        character.book = book;
+        const createdCharacter = await AppDataSource.manager.save(character);
+
+        console.log(createdCharacter);
+
+        return createdCharacter;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    },
+    deleteCharacter: async (_: any, args: any) => {
+      const { id } = args;
+      try {
+        const character = await Character.findOneBy({ id });
+        if (character) {
+          await Character.remove(character);
+        }
+
+        console.log(character);
 
         return true;
       } catch (error) {
+        console.error(error);
+        return false;
+      }
+    },
+    updateCharacter: async (_: any, args: any) => {
+      const { id, name, age, description, labelId } = args;
+      try {
+        Character.update({ id }, { name, age, description });
+
+        Label.update({ id: labelId }, { label: name });
+
+        return true;
+      } catch (error) {
+        console.error(error);
         return false;
       }
     },

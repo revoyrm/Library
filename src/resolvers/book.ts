@@ -9,9 +9,9 @@ export const bookResolver = {
         relations: {
           allLabels: true,
           label: true,
-          characters: true,
-          chapters: true,
-          settings: true,
+          characters: { label: true },
+          chapters: { label: true },
+          settings: { label: true },
         },
       });
     },
@@ -44,7 +44,6 @@ export const bookResolver = {
       const { id } = args;
       try {
         const book = await Book.findOneBy({ id });
-        //todo label
         if (book) {
           await Book.remove(book);
         }

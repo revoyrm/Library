@@ -26,10 +26,6 @@ export class Setting extends BaseEntity {
   @JoinColumn()
   label: Label;
 
-  @OneToMany(() => Label, (label) => label.book)
-  allLabels: Label[];
-  
   @ManyToOne(() => Book, (book) => book.chapters)
   book: Book;
-
 }

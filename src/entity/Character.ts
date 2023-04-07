@@ -20,15 +20,18 @@ export class Character extends BaseEntity {
   name: string;
 
   @Column()
+  age: number;
+
+  @Column()
   description: string;
 
   @OneToOne(() => Label)
   @JoinColumn()
   label: Label;
 
-  @OneToMany(() => Label, (label) => label.book)
-  allLabels: Label[];
-  
+  // @OneToMany(() => Label, (label) => label.book)
+  // allLabels: Label[];
+
   @ManyToOne(() => Book, (book) => book.chapters)
   book: Book;
 }

@@ -11,7 +11,7 @@ export const chapterResolver = {
     },
     getChapterById: async (_: any, args: any) => {
       const { id } = args;
-      return await Chapter.find({
+      return await Chapter.findOne({
         where: { id },
         relations: {
           label: true,
@@ -56,8 +56,15 @@ export const chapterResolver = {
       const { id } = args;
       try {
         const chapter = await Chapter.findOneBy({ id });
+        const label = await Label.findOneBy({ id: chapter.label.id });
         if (chapter) {
           await Chapter.remove(chapter);
+        }
+
+        if (label) {
+          console.log("Found label", label.label);
+          await Label.remove(label);
+          console.log("REMOVED LABEL");
         }
 
         console.log(chapter);
@@ -69,11 +76,21 @@ export const chapterResolver = {
       }
     },
     updateChapter: async (_: any, args: any) => {
-      const { id, name, number, description, labelId } = args;
+      const { bookId, id, name, number, description, labelId } = args;
       try {
-        Chapter.update({ id }, { name, number, description });
+        const book = await Book.findOne({
+          where: { id: bookId },
+          relations: {
+            chapters: true,
+            allLabels: true,
+          },
+        });
 
-        Label.update({ id: labelId }, { label: name });
+        if (!book) return null;
+
+        await Chapter.update({ id }, { name, number, description });
+
+        await Label.update({ id: labelId }, { label: name });
 
         return true;
       } catch (error) {

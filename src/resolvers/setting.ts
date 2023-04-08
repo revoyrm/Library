@@ -11,7 +11,7 @@ export const settingResolver = {
     },
     getSettingById: async (_: any, args: any) => {
       const { id } = args;
-      return await Setting.find({
+      return await Setting.findOne({
         where: { id },
         relations: {
           label: true,
@@ -55,8 +55,15 @@ export const settingResolver = {
       const { id } = args;
       try {
         const setting = await Setting.findOneBy({ id });
+        const label = await Label.findOneBy({ id: setting.label.id });
         if (setting) {
           await Setting.remove(setting);
+        }
+
+        if (label) {
+          console.log("Found label", label.label);
+          await Label.remove(label);
+          console.log("REMOVED LABEL");
         }
 
         console.log(setting);

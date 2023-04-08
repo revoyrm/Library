@@ -1,11 +1,10 @@
 export const labelType = `#graphql
   type Label {
+    id: ID
     label: String
-    book: Book
   }
 
   type Query {
-    getLabelByBookId(id: String): Label
-  }
-  
+    getLabelsByIds(ids: [ID]): [Label]
+  }  
 `;

@@ -11,7 +11,7 @@ export const characterResolver = {
     },
     getCharacterById: async (_: any, args: any) => {
       const { id } = args;
-      return await Character.find({
+      return await Character.findOne({
         where: { id },
         relations: {
           label: true,
@@ -56,8 +56,15 @@ export const characterResolver = {
       const { id } = args;
       try {
         const character = await Character.findOneBy({ id });
+        const label = await Label.findOneBy({ id: character.label.id });
         if (character) {
           await Character.remove(character);
+        }
+
+        if (label) {
+          console.log("Found label", label.label);
+          await Label.remove(label);
+          console.log("REMOVED LABEL");
         }
 
         console.log(character);

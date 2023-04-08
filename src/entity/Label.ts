@@ -6,9 +6,6 @@ import {
   ManyToOne,
 } from "typeorm";
 import { Book } from "./Book";
-import { Chapter } from "./Chapter";
-import { Character } from "./Character";
-import { Setting } from "./Setting";
 
 @Entity()
 export class Label extends BaseEntity {

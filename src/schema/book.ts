@@ -41,6 +41,10 @@ export const bookType = `#graphql
   type Query {
     getBooks: [Book]
   }
+  
+  type Query {
+    getBookById(id: ID): Book
+  }
 
   type Mutation {
     createBook(title: String, author: String, summary: String ): Book

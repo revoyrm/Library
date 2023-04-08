@@ -14,6 +14,7 @@ export const settingResolver = {
       return await Setting.findOne({
         where: { id },
         relations: {
+          book: true,
           label: true,
         },
       });

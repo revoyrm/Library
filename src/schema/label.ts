@@ -6,5 +6,5 @@ export const labelType = `#graphql
 
   type Query {
     getLabelsByIds(ids: [ID]): [Label]
-  }  
+  }
 `;

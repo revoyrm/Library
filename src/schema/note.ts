@@ -20,14 +20,14 @@ export const noteType = `#graphql
   }
 
   type Mutation {
-    createNote(title: String, note: String, labels: [ID] ): Note
-  }
-
-  type Mutation {
-    updateNote(title: String, note: String, labels: [ID] ): Boolean
+    createNote(title: String, note: String, labelIds: [ID] ): Note
   }
 
   type Mutation {
     deleteNote(id: ID): Boolean
+  }
+
+  type Mutation {
+    updateNote(id: ID, title: String, note: String, labelIds: [ID] ): Boolean
   }
 `;

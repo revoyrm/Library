@@ -30,7 +30,7 @@ export const chapterType = `#graphql
   }
 
   type Query {
-    getChapterById(id: String): Chapter
+    getChapterById(id: ID): Chapter
   }
 
   type Mutation {
@@ -42,6 +42,6 @@ export const chapterType = `#graphql
   }
 
   type Mutation {
-    updateChapter(id: ID, name: String, number: String, description: String, labelId: ID): Boolean
+    updateChapter(id: ID, name: String, number: Int, description: String, labelId: ID): Boolean
   }
 `;

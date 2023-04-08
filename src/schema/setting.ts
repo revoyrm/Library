@@ -29,7 +29,7 @@ export const settingType = `#graphql
   }
 
   type Query {
-    getSettingById(id: String): Setting
+    getSettingById(id: ID): Setting
   }
 
   type Mutation {

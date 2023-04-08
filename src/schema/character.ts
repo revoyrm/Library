@@ -31,7 +31,7 @@ export const characterType = `#graphql
   }
 
   type Query {
-    getCharacterById(id: String): Character
+    getCharacterById(id: ID): Character
   }
 
   type Mutation {

@@ -1,6 +1,7 @@
 import { In } from "typeorm";
 import { Label } from "../entity/Label";
 import { Note } from "../entity/Note";
+import { AppDataSource } from "../data-source";
 
 // Provide resolver functions for your schema fields
 export const noteResolver = {
@@ -19,33 +20,23 @@ export const noteResolver = {
   },
   Mutation: {
     createNote: async (_: any, args: any) => {
-      const { title, note, labels } = args;
+      const { title, note, labelIds } = args;
       try {
-        let allLabels: Label[] = [];
+        console.log("CreateNote");
+        const labels = await Label.find({ where: { id: In(labelIds) } });
+        console.log("found labels", JSON.stringify(labels, null, 2));
 
-        await labels?.forEach(async ({ id }) => {
-          const existingLabel = await Label.findOne({
-            where: id,
-            relations: {
-              label: true,
-            },
-          });
+        const newNote = new Note();
+        newNote.title = title;
+        newNote.note = note;
+        newNote.labels = labels;
+        console.log({ newNote });
+        const createdNote = await AppDataSource.manager.save(newNote);
+        console.log({ createdNote });
 
-          if (existingLabel) {
-            allLabels.push(existingLabel);
-          }
-        });
-
-        const newNote = Note.create({
-          title,
-          note,
-          labels: allLabels,
-        });
-
-        await newNote.save();
-
-        return newNote;
+        return createdNote;
       } catch (error) {
+        console.error(error);
         return null;
       }
     },
@@ -66,24 +57,11 @@ export const noteResolver = {
       }
     },
     updateNote: async (_: any, args: any) => {
-      const { id, title, note, labels } = args;
+      const { id, title, note, labelIds } = args;
       try {
-        let allLabels: Label[] = [];
+        const labels = await Label.find({ where: { id: In(labelIds) } });
 
-        await labels?.forEach(async ({ id }) => {
-          const existingLabel = await Label.findOne({
-            where: id,
-            relations: {
-              label: true,
-            },
-          });
-
-          if (existingLabel) {
-            allLabels.push(existingLabel);
-          }
-        });
-
-        Note.update({ id }, { title, note, labels: allLabels });
+        await Note.save({ id, title, note, labels });
 
         return true;
       } catch (error) {

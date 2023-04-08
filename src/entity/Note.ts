@@ -3,8 +3,8 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  JoinColumn,
   ManyToMany,
+  JoinTable,
 } from "typeorm";
 import { Label } from "./Label";
 
@@ -20,6 +20,6 @@ export class Note extends BaseEntity {
   note: string;
 
   @ManyToMany(() => Label)
-  @JoinColumn()
+  @JoinTable()
   labels: Label[];
 }

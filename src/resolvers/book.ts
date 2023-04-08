@@ -15,6 +15,19 @@ export const bookResolver = {
         },
       });
     },
+    getBookById: async (_: any, args: any) => {
+      const { id } = args;
+      console.log(id);
+      return await Book.findOne({
+        where: { id },
+        relations: {
+          label: true,
+          characters: { label: true },
+          chapters: { label: true },
+          settings: { label: true },
+        },
+      });
+    },
   },
   Mutation: {
     createBook: async (_: any, args: any) => {

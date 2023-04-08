@@ -14,6 +14,7 @@ export const characterResolver = {
       return await Character.findOne({
         where: { id },
         relations: {
+          book: true,
           label: true,
         },
       });

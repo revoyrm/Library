@@ -14,6 +14,7 @@ export const chapterResolver = {
       return await Chapter.findOne({
         where: { id },
         relations: {
+          book: true,
           label: true,
         },
       });
@@ -82,7 +83,6 @@ export const chapterResolver = {
           where: { id: bookId },
           relations: {
             chapters: true,
-            allLabels: true,
           },
         });
 

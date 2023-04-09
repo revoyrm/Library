@@ -3,11 +3,17 @@ import { Book } from "../entity/Book";
 import { Label } from "../entity/Label";
 import { Setting } from "../entity/Setting";
 
-// Provide resolver functions for your schema fields
 export const settingResolver = {
   Query: {
     getSettingsByBookId: async (_: any, args: any) => {
-      return await Setting.find();
+      const { bookId } = args;
+      return await Setting.find({
+        where: { book: { id: bookId } },
+        relations: {
+          book: true,
+          label: true,
+        },
+      });
     },
     getSettingById: async (_: any, args: any) => {
       const { id } = args;

@@ -3,11 +3,17 @@ import { Book } from "../entity/Book";
 import { Character } from "../entity/Character";
 import { Label } from "../entity/Label";
 
-// Provide resolver functions for your schema fields
 export const characterResolver = {
   Query: {
     getCharactersByBookId: async (_: any, args: any) => {
-      return await Character.find();
+      const { bookId } = args;
+      return await Character.find({
+        where: { book: { id: bookId } },
+        relations: {
+          book: true,
+          label: true,
+        },
+      });
     },
     getCharacterById: async (_: any, args: any) => {
       const { id } = args;

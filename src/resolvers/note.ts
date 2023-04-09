@@ -61,12 +61,10 @@ export const noteResolver = {
       try {
         const labels = await Label.find({ where: { id: In(labelIds) } });
 
-        await Note.save({ id, title, note, labels });
-
-        return true;
+        return await Note.save({ id, title, note, labels });
       } catch (error) {
         console.error(error);
-        return false;
+        return null;
       }
     },
   },

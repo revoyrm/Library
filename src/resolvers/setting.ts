@@ -56,16 +56,16 @@ export const settingResolver = {
       const { id } = args;
       try {
         const setting = await Setting.findOneBy({ id });
-        const label = await Label.findOneBy({ id: setting.label.id });
+        // const label = await Label.findOneBy({ id: setting.label.id });
         if (setting) {
           await Setting.remove(setting);
         }
 
-        if (label) {
-          console.log("Found label", label.label);
-          await Label.remove(label);
-          console.log("REMOVED LABEL");
-        }
+        // if (label) {
+        //   console.log("Found label", label.label);
+        //   await Label.remove(label);
+        //   console.log("REMOVED LABEL");
+        // }
 
         console.log(setting);
 

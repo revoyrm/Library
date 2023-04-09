@@ -32,6 +32,6 @@ export class Character extends BaseEntity {
   // @OneToMany(() => Label, (label) => label.book)
   // allLabels: Label[];
 
-  @ManyToOne(() => Book, (book) => book.chapters)
+  @ManyToOne(() => Book, (book) => book.chapters, { onDelete: "CASCADE" })
   book: Book;
 }

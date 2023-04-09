@@ -29,6 +29,6 @@ export class Chapter extends BaseEntity {
   @JoinColumn()
   label: Label;
 
-  @ManyToOne(() => Book, (book) => book.chapters)
+  @ManyToOne(() => Book, (book) => book.chapters, { onDelete: "CASCADE" })
   book: Book;
 }

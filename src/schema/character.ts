@@ -2,8 +2,7 @@ export const characterType = `#graphql
   type Label {
     id: ID
     label: String
-  }
-  
+  }  
   
   type Book {
     id: ID

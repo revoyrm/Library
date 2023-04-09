@@ -1,7 +1,7 @@
 export const chapterType = `#graphql
   type Label {
-    label: String
     id: ID
+    label: String
   }
   
   type Book {

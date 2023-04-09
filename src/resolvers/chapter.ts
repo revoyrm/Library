@@ -54,19 +54,20 @@ export const chapterResolver = {
       }
     },
     deleteChapter: async (_: any, args: any) => {
+      console.log(args);
       const { id } = args;
       try {
         const chapter = await Chapter.findOneBy({ id });
-        const label = await Label.findOneBy({ id: chapter.label.id });
+        // const label = await Label.findOneBy({ id: chapter.label.id });
         if (chapter) {
           await Chapter.remove(chapter);
         }
 
-        if (label) {
-          console.log("Found label", label.label);
-          await Label.remove(label);
-          console.log("REMOVED LABEL");
-        }
+        // if (label) {
+        //   console.log("Found label", label.label);
+        //   await Label.remove(label);
+        //   console.log("REMOVED LABEL");
+        // }
 
         console.log(chapter);
 
@@ -77,17 +78,8 @@ export const chapterResolver = {
       }
     },
     updateChapter: async (_: any, args: any) => {
-      const { bookId, id, name, number, description, labelId } = args;
+      const { id, name, number, description, labelId } = args;
       try {
-        const book = await Book.findOne({
-          where: { id: bookId },
-          relations: {
-            chapters: true,
-          },
-        });
-
-        if (!book) return null;
-
         await Chapter.update({ id }, { name, number, description });
 
         await Label.update({ id: labelId }, { label: name });

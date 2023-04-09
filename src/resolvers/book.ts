@@ -5,7 +5,7 @@ import { AppDataSource } from "../data-source";
 export const bookResolver = {
   Query: {
     getBooks: async (_: any, args: any) => {
-      return await Book.find({
+      const books = await Book.find({
         relations: {
           allLabels: true,
           label: true,
@@ -14,10 +14,11 @@ export const bookResolver = {
           settings: { label: true },
         },
       });
+
+      return books;
     },
     getBookById: async (_: any, args: any) => {
       const { id } = args;
-      console.log(id);
       return await Book.findOne({
         where: { id },
         relations: {
@@ -45,8 +46,6 @@ export const bookResolver = {
         book.allLabels = [label];
         const createdBook = await AppDataSource.manager.save(book);
 
-        console.log(createdBook);
-
         return createdBook;
       } catch (error) {
         console.error(error);
@@ -60,8 +59,6 @@ export const bookResolver = {
         if (book) {
           await Book.remove(book);
         }
-
-        console.log(book);
 
         return true;
       } catch (error) {

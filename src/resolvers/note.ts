@@ -22,17 +22,13 @@ export const noteResolver = {
     createNote: async (_: any, args: any) => {
       const { title, note, labelIds } = args;
       try {
-        console.log("CreateNote");
         const labels = await Label.find({ where: { id: In(labelIds) } });
-        console.log("found labels", JSON.stringify(labels, null, 2));
 
         const newNote = new Note();
         newNote.title = title;
         newNote.note = note;
         newNote.labels = labels;
-        console.log({ newNote });
         const createdNote = await AppDataSource.manager.save(newNote);
-        console.log({ createdNote });
 
         return createdNote;
       } catch (error) {
@@ -48,8 +44,6 @@ export const noteResolver = {
           await Note.remove(note);
         }
 
-        console.log(note);
-
         return true;
       } catch (error) {
         console.error(error);
@@ -61,7 +55,13 @@ export const noteResolver = {
       try {
         const labels = await Label.find({ where: { id: In(labelIds) } });
 
-        return await Note.save({ id, title, note, labels });
+        const updatedNote = await Note.save({
+          id: Number(id),
+          title,
+          note,
+          labels,
+        });
+        return updatedNote;
       } catch (error) {
         console.error(error);
         return null;

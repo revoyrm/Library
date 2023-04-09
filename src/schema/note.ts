@@ -28,6 +28,6 @@ export const noteType = `#graphql
   }
 
   type Mutation {
-    updateNote(id: ID, title: String, note: String, labelIds: [ID] ): Note
+    updateNote(id: ID, title: String, note: String, labelIds: [String] ): Note
   }
 `;

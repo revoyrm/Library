@@ -28,6 +28,10 @@ export const characterType = `#graphql
   type Query {
     getCharactersByBookId(bookId: String): [Character]
   }
+  
+  type Query {
+    getCharactersByLabelIds(labelIds: [ID]): [Character]
+  }
 
   type Query {
     getCharacterById(id: ID): Character

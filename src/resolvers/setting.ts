@@ -1,3 +1,4 @@
+import { In } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Book } from "../entity/Book";
 import { Label } from "../entity/Label";
@@ -9,6 +10,16 @@ export const settingResolver = {
       const { bookId } = args;
       return await Setting.find({
         where: { book: { id: bookId } },
+        relations: {
+          book: true,
+          label: true,
+        },
+      });
+    },
+    getSettingsByLabelIds: async (_: any, args: any) => {
+      const { labelIds } = args;
+      return await Setting.find({
+        where: { label: { id: In(labelIds) } },
         relations: {
           book: true,
           label: true,

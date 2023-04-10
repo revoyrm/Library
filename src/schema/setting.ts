@@ -27,6 +27,10 @@ export const settingType = `#graphql
   type Query {
     getSettingsByBookId(bookId: String): [Setting]
   }
+  
+  type Query {
+    getSettingsByLabelIds(labelIds: [ID]): [Setting]
+  }
 
   type Query {
     getSettingById(id: ID): Setting

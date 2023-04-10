@@ -1,3 +1,4 @@
+import { In } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Book } from "../entity/Book";
 import { Character } from "../entity/Character";
@@ -9,6 +10,16 @@ export const characterResolver = {
       const { bookId } = args;
       return await Character.find({
         where: { book: { id: bookId } },
+        relations: {
+          book: true,
+          label: true,
+        },
+      });
+    },
+    getCharactersByLabelIds: async (_: any, args: any) => {
+      const { labelIds } = args;
+      return await Character.find({
+        where: { label: { id: In(labelIds) } },
         relations: {
           book: true,
           label: true,

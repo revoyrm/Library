@@ -28,6 +28,10 @@ export const chapterType = `#graphql
   type Query {
     getChaptersByBookId(bookId: String): [Chapter]
   }
+  
+  type Query {
+    getChaptersByLabelIds(labelIds: [ID]): [Chapter]
+  }
 
   type Query {
     getChapterById(id: ID): Chapter

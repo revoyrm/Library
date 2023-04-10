@@ -34,7 +34,7 @@ export const characterType = `#graphql
   }
 
   type Mutation {
-    createCharacter(bookId: String, name: String, age: String, description: String ): Character
+    createCharacter(bookId: String, name: String, age: Int, description: String ): Character
   }
 
   type Mutation {
@@ -42,6 +42,6 @@ export const characterType = `#graphql
   }
 
   type Mutation {
-    updateCharacter(id: ID, name: String, age: String, description: String, labelId: ID): Boolean
+    updateCharacter(id: ID, name: String, age: Int, description: String, labelId: ID): Boolean
   }
 `;

@@ -1,6 +1,7 @@
 import { Book } from "../entity/Book";
 import { Label } from "../entity/Label";
 import { AppDataSource } from "../data-source";
+import { In } from "typeorm";
 
 export const bookResolver = {
   Query: {
@@ -16,6 +17,15 @@ export const bookResolver = {
       });
 
       return books;
+    },
+    getBooksByLabelIds: async (_: any, args: any) => {
+      const { labelIds } = args;
+      return await Book.find({
+        where: { label: { id: In(labelIds) } },
+        relations: {
+          label: true,
+        },
+      });
     },
     getBookById: async (_: any, args: any) => {
       const { id } = args;

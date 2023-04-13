@@ -43,6 +43,10 @@ export const bookType = `#graphql
   }
   
   type Query {
+    getBooksByLabelIds(labelIds: [ID]): [Character]
+  }
+  
+  type Query {
     getBookById(id: ID): Book
   }
 
